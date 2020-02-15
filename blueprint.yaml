@@ -1,5 +1,5 @@
 formatVersion: 1
-name: Multi-Cloud Deployment-Do-NOT-Modify
+name: Multi-Cloud Deployment Example
 version: 1
 inputs:
   SelectCloud:
