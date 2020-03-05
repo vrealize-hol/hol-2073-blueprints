@@ -1,0 +1,32 @@
+formatVersion: 1
+name: CentOS-On-Demand-Network
+version: 1
+inputs:
+  name:
+    type: string
+    default: hol-centos
+    title: Hostname
+    minLength: 1
+    maxLength: 10
+  network-name:
+    type: string
+    default: hol-od
+    title: network-name
+    minLength: 1
+    maxLength: 10
+resources:
+  Cloud_vSphere_Machine_1:
+    type: Cloud.vSphere.Machine
+    properties:
+      image: CentOS7
+      flavor: micro
+      name: '${input.name}'
+      customizationSpec: CentOS
+      networks:
+        - network: '${resource.Cloud_NSX_Network_1.id}'
+          assignment: static
+  Cloud_NSX_Network_1:
+    type: Cloud.NSX.Network
+    properties:
+      networkType: routed
+      name: '${input.network-name}'
