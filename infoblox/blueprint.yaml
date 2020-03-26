@@ -1,0 +1,29 @@
+formatVersion: 1
+name: CentOS-Infoblox
+version: 1
+inputs:
+  hostname:
+    type: string
+    default: hol-lb
+    title: Hostname
+    minLength: 1
+    maxLength: 10
+resources:
+  Cloud_vSphere_Machine_1:
+    type: Cloud.vSphere.Machine
+    properties:
+      image: CentOS7
+      flavor: micro
+      customizationSpec: CentOS
+      name: '${input.hostname}'
+      constraints:
+        - tag:  'hol.cloud.zone.compute:a'
+      networks:
+        - network: '${resource.Cloud_NSX_Network_1.id}'
+          assignment: static
+  Cloud_NSX_Network_1:
+    type: Cloud.NSX.Network
+    properties:
+      constraints: 
+        - tag: 'env:infoblox'
+      networkType: existing
